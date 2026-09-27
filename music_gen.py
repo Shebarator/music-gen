@@ -1,17 +1,8 @@
-"""Генератор музыкальных треков.
-
-Каждый запуск создаёт ОДИН уникальный MIDI-файл.
-Пространство возможных треков — десятки тысяч комбинаций.
-"""
-
 import random
 import sys
 import time
 from midiutil import MIDIFile
 
-
-# --- ПРОСТРАНСТВО ГЕНЕРАЦИИ ---
-# Считаем: 13 × 15 × 3 × 10 × 4 × 3 × 2 = 140 400 комбинаций
 
 # 1. Тональности (13)
 KEYS = [
@@ -80,7 +71,7 @@ BASS_STYLES = [
 MELODY_OCTAVES = [12, 24]
 
 
-# --- ЛОГИКА ГЕНЕРАЦИИ ---
+# --- ЛОГИКА ---
 
 CHORD_TYPES = {
     "M":   [0, 4, 7],
@@ -99,7 +90,6 @@ def get_chord_notes(root: int, chord_type: str) -> list:
 
 def build_track_data(seed: int = None) -> dict:
     """Собирает все случайные параметры для одного трека.
-
     Если seed задан — воспроизводимо.
     """
     if seed is not None:
@@ -143,7 +133,6 @@ def build_filename(params: dict) -> str:
 
 def generate_track(params: dict, min_duration_sec: float = 30.0):
     """Генерирует MIDI-трек по заданным параметрам.
-
     Возвращает имя файла.
     """
     tempo = params["tempo"]
@@ -246,7 +235,7 @@ def main():
     params = build_track_data(seed)
     filename = generate_track(params)
 
-    print(f"✅ Сгенерирован: {filename}")
+    print(f"   Сгенерирован: {filename}")
     print(f"   seed: {params['seed']}")
     print(f"   Тональность: {params['key_name']}")
     print(f"   Прогрессия: {params['progression_name']}")
